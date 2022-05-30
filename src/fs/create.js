@@ -1,15 +1,20 @@
-import fs from 'fs';
+// import all module
+import { access } from 'fs';
+import { writeFile } from 'fs/promises';
 import path from 'path';
 
 export const create = async () => {
+    // generate absolute path
     const dir = path.join(path.resolve(), 'files', 'fresh.txt');
-    fs.access(dir, (err) => {
-        if (err) throw err;//new Error('FS operation failed');
-        fs.promises.writeFile(dir, 'I am fresh and young', { encoding: 'utf-8', });
+    // check to exist path
+    access(dir, (err) => {
+        // if path is exist throw new error
+        if (!err) {
+            throw new Error('FS operation failed');
+        }
+        // create new file if path isn't exist
+        writeFile(dir, 'I am fresh and young', { encoding: 'utf-8', });
     })
-    // const writer = fs.createWriteStream(dir , 'utf-8');
-    // const pwriter = fs.promises.writeFile(dir, 'I am fresh and young', { encoding: 'utf-8', })
-    // writer.write('I am fresh and young');
 };
 
 create();
