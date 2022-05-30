@@ -1,3 +1,6 @@
 export const rename = async () => {
-    // Write your code here 
+    const fs = require('fs');
+    const path = require('path');
+
+    
 };
