@@ -3,16 +3,28 @@ import path from 'path';
 import { cpus } from 'os';
 
 export const performCalculations = async () => {
-    const cpuCount = await cpus().length;
-    console.log('cpu count: ', cpuCount);
+    const cpuCount = cpus().length;
+    const result = [];
     const wPath = path.join(path.resolve(), 'worker.js');
-    for (let i = 0; i < cpuCount; i++){
-        const worker = new Worker(wPath, { workerData: 10 + i });
-        worker.on('message', (data) => {
-            console.log(data);
-        })
-    }
-
+    let i = 0;
+    while( i < cpuCount){
+        const runPromis = new Promise((success, error) => {
+            const worker = new Worker(wPath, { workerData: '//10 + i' });
+            worker.on('message', (data) => {
+                success(data);
+            })
+            worker.on('error', () => {
+                error(null);
+            })
+        }).then((data) => {
+            result.push({ 'status': 'resolved', 'data': data });
+        }).catch((data) => {
+            result.push({'status': 'error', 'data': data});
+        });
+        await runPromis;
+        i++;
+    };
+    return result;
 };
 
-performCalculations();
+console.log(await performCalculations());
