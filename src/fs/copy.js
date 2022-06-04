@@ -3,10 +3,12 @@ import { copyFile } from 'fs/promises';
 import { access } from 'fs/promises';
 import { readdir } from 'fs/promises';
 import path from 'path';
+import { fileURLToPath } from 'url';
 
 export const copy = async () => {
-    const distPath = path.join(path.resolve(), 'files_copy');
-    const srcPath = path.join(path.resolve(), 'files');
+    const currDir = path.dirname(fileURLToPath(import.meta.url));
+    const distPath = path.join(currDir, 'files_copy');
+    const srcPath = path.join(currDir, 'files');
     let isExistSrc;
     let isExistDist;
 

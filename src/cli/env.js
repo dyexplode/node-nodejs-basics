@@ -1,4 +1,5 @@
 import process from 'process';
+
 export const parseEnv = () => {
     const envItem = process.env;
     const arrProp = [];

@@ -1,8 +1,9 @@
-import { join, resolve} from 'path';
+import { join, dirname} from 'path';
 import { unlink } from 'fs/promises';
+import { fileURLToPath } from 'url';
 
 export const remove = async () => {
-    const dir = join(resolve(), 'files', 'fileToRemove.txt');
+    const dir = join(dirname(fileURLToPath(import.meta.url)), 'files', 'fileToRemove.txt');
     try {
         await unlink(dir);
     } catch {

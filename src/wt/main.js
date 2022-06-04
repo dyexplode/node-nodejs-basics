@@ -1,15 +1,16 @@
 import { Worker } from 'worker_threads';
 import path from 'path';
 import { cpus } from 'os';
+import { fileURLToPath } from 'url';
 
 export const performCalculations = async () => {
     const cpuCount = cpus().length;
     const result = [];
-    const wPath = path.join(path.resolve(), 'worker.js');
+    const wPath = path.join(path.dirname(fileURLToPath(import.meta.url)), 'worker.js');
     let i = 0;
     while( i < cpuCount){
         const runPromis = new Promise((success, error) => {
-            const worker = new Worker(wPath, { workerData: '//10 + i' });
+            const worker = new Worker(wPath, { workerData: 10 + i });
             worker.on('message', (data) => {
                 success(data);
             })

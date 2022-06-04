@@ -1,7 +1,7 @@
-const arguments = process.argv.slice(2);
+const argus = process.argv.slice(2);
 
-console.log(`Total number of arguments is ${arguments.length}`);
-console.log(`Arguments: ${JSON.stringify(arguments)}`);
+console.log(`Total number of arguments is ${argus.length}`);
+console.log(`Arguments: ${JSON.stringify(argus)}`);
 
 const echoInput = (chunk) => {
     const chunkStringified = chunk.toString();
@@ -10,3 +10,6 @@ const echoInput = (chunk) => {
 };
 
 process.stdin.on('data', echoInput);
+process.on('message', (dann) => {
+    process.stdout.write(`Sent from Message IPC: ${dann}`);
+})
