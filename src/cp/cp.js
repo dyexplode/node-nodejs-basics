@@ -13,14 +13,11 @@ export const spawnChildProcess = async (args) => {
        console.log('data', data);
    });
 
-   child.on('data', (data2) => {
-       console.log('data2', data2);
-   })
-
    child.on('close', (code) => {
        console.log('code', code);
    })
-   child.send('jjj');
+
+//    setTimeout(() => child.send('jjj'), 100);
 };
 
-spawnChildProcess([3, 3,4,5,6,7,8,9]);
+spawnChildProcess([1, 2, 3, 4, 5, 6, 7, 8, 9]);
